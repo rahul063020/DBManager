@@ -1,0 +1,10 @@
+E:\rahul\Test Pro\DBManager\DBManager\bin\Release\DBManager.dll
+E:\rahul\Test Pro\DBManager\DBManager\bin\Release\DBManager.pdb
+E:\rahul\Test Pro\DBManager\DBManager\obj\Release\DBManager.dll
+E:\rahul\Test Pro\DBManager\DBManager\obj\Release\DBManager.pdb
+E:\rahul\Test Pro\DBManager\DBManager\obj\Release\DBManager.csprojResolveAssemblyReference.cache
+D:\Project\Test Pro\DBManager\DBManager\bin\Release\DBManager.dll
+D:\Project\Test Pro\DBManager\DBManager\bin\Release\DBManager.pdb
+D:\Project\Test Pro\DBManager\DBManager\obj\Release\DBManager.csprojResolveAssemblyReference.cache
+D:\Project\Test Pro\DBManager\DBManager\obj\Release\DBManager.dll
+D:\Project\Test Pro\DBManager\DBManager\obj\Release\DBManager.pdb

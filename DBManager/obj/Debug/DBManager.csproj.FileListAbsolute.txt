@@ -1,0 +1,10 @@
+D:\Project\Test Pro\DBManager\DBManager\bin\Debug\DBManager.dll
+D:\Project\Test Pro\DBManager\DBManager\bin\Debug\DBManager.pdb
+D:\Project\Test Pro\DBManager\DBManager\obj\Debug\DBManager.csprojResolveAssemblyReference.cache
+D:\Project\Test Pro\DBManager\DBManager\obj\Debug\DBManager.dll
+D:\Project\Test Pro\DBManager\DBManager\obj\Debug\DBManager.pdb
+E:\rahul\Test Pro\DBManager\DBManager\bin\Debug\DBManager.dll
+E:\rahul\Test Pro\DBManager\DBManager\bin\Debug\DBManager.pdb
+E:\rahul\Test Pro\DBManager\DBManager\obj\Debug\DBManager.csprojResolveAssemblyReference.cache
+E:\rahul\Test Pro\DBManager\DBManager\obj\Debug\DBManager.dll
+E:\rahul\Test Pro\DBManager\DBManager\obj\Debug\DBManager.pdb
