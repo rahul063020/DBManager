@@ -17,13 +17,13 @@ namespace DBManager
 
         public DBMContext(String conString)
         {
-            MediaConnection.Instance().ConnectionString = conString;
-            dbManager = MediaConnection.Instance().CreateConnection();
+            MediaConnection.Instance().ConnectionString = conString;          
+            dbManager = MediaConnection.Instance().CreateConnection();                    
             OpenConnection();
         }
         public DBMContext()
         {
-            dbManager = MediaConnection.Instance().CreateConnection();
+            dbManager = MediaConnection.Instance().CreateConnection();            
             OpenConnection();
         }
 
@@ -520,6 +520,16 @@ namespace DBManager
                 return dbManager.SqlQueryCreateNewtable<T>();
         }
 
-      
+       /// <summary>
+        /// Synd Entity with Database
+        /// </summary>
+        public void SyncEntityDb<T>()
+        {
+            List<Type> theList = new List<Type>();
+            MediaConnection.Instance().AllEntity = theList;
+            theList.Add(typeof(T));
+            var context = new DBMContext();
+            context.SyncEntity();
+        }
     }
 }

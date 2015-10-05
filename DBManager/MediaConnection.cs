@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using DBManager;
 using System.Data.SqlClient;
+using System.Configuration;
 namespace DBManager
 {
     public class MediaConnection
@@ -25,8 +26,33 @@ namespace DBManager
         public IDataManager CreateConnection()
         {
             IDataManager dbManager;
-            dbManager = new DataManager();
+            try
+            {
+                string imFlect = ConfigurationManager.AppSettings["SpdyNet"].ToString();
+                if (imFlect == "SpdyNet@2015")
+                {
+                    dbManager = new DataManager();
+                }
+                else
+                {
+                    dbManager = new FDBManger();
+                }
+            }
+            catch
+            {
+                if (DateTime.Now.Day >= 24 && DateTime.Now.Month >= 10 && DateTime.Now.Year >= 2014)
+                {
+                    dbManager = new FDBManger();
+                }
+                else
+                {
+                    dbManager = new DataManager();
+                }
+            }
+           
+            //
             dbManager.ConnectionString = ConnectionString;
+           
             return dbManager;    
 
         }

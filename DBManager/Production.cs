@@ -219,11 +219,11 @@ namespace DBManager
                             }
                             else if (pro.PropertyType == typeof(Nullable<System.Guid>))
                             {
-                                updateIno += "," + " [" + pro.Name + "] =" + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + ")";
+                                updateIno += "," + " [" + pro.Name + "] =" + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')";
                             }
                             else if (pro.PropertyType == typeof(System.Guid))
                             {
-                                updateIno += "," + " [" + pro.Name + "] =" + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + ")";
+                                updateIno += "," + " [" + pro.Name + "] =" + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')";
                             }
                             else
                             {
@@ -624,7 +624,7 @@ namespace DBManager
                 {
                     try
                     {
-                        if (props[pro.Name].GetValue(itm) != null && !props[pro.Name].GetValue(itm).Equals("")  && pro.CustomAttributes.ToList().Count>0)
+                        if (props[pro.Name].GetValue(itm) != null && !props[pro.Name].GetValue(itm).Equals(""))
                         {
                             if (pro.PropertyType == typeof(System.DateTime))
                             {
@@ -685,7 +685,7 @@ namespace DBManager
                                 {
                                     sb.Append(" and ");
                                 }
-                                sb.Append("[" + pro.Name + "] ='" + props[pro.Name].GetValue(itm));
+                                sb.Append("[" + pro.Name + "] =" + props[pro.Name].GetValue(itm));
                             }
                             else if (pro.PropertyType == typeof(System.Boolean))
                             {
@@ -746,7 +746,7 @@ namespace DBManager
                                 {
                                     sb.Append(" and ");
                                 }
-                            sb.Append("[" + pro.Name + "] =CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + ")");
+                            sb.Append("[" + pro.Name + "] =CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')");
                             }
                             else if (pro.PropertyType == typeof(Nullable<System.Guid>))
                             {
@@ -758,7 +758,7 @@ namespace DBManager
                                 {
                                     sb.Append(" and ");
                                 }
-                                sb.Append("[" + pro.Name + "] =CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + ")");
+                                sb.Append("[" + pro.Name + "] =CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')");
                             }
                             else
                             {
@@ -789,7 +789,191 @@ namespace DBManager
 
                 }
             }
-            return "";
+            return sb.ToString();
+        }
+
+
+
+        public string ExistSelectQuery<T>(List<T> Result)
+        {
+            StringBuilder sb = new StringBuilder();
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
+            var properties = typeof(T).GetProperties();
+            sb.Append(" SELECT * FROM ["+ TABLE_NAME+"] ");
+            foreach (T itm in Result)
+            {
+                foreach (var pro in properties)
+                {
+                    try
+                    {
+                        if (props[pro.Name].GetValue(itm) != null && !props[pro.Name].GetValue(itm).Equals("")  && pro.Name==ID_FIELD)
+                        {
+                            if (pro.PropertyType == typeof(System.DateTime))
+                            {
+                                DateTime dt = (DateTime)props[pro.Name].GetValue(itm);
+                                if(!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =" + dt);
+                            }
+                            else if (pro.PropertyType == typeof(Nullable<System.Int32>))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =" + props[pro.Name].GetValue(itm));
+                            }
+                            else if (pro.PropertyType == typeof(System.Int32))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =" + props[pro.Name].GetValue(itm));
+                            }
+                            else if (pro.PropertyType == typeof(System.Double))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =" + props[pro.Name].GetValue(itm));
+                            }
+                            else if (pro.PropertyType == typeof(Nullable<System.Double>))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =" + props[pro.Name].GetValue(itm));
+                            }
+                            else if (pro.PropertyType == typeof(System.Boolean))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] ='" + props[pro.Name].GetValue(itm)+"'");
+                            }
+                            else if (pro.PropertyType == typeof(Nullable<System.Boolean>))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] ='" + props[pro.Name].GetValue(itm) + "'");
+                            }
+                            else if (pro.PropertyType == typeof(System.Decimal))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =" + props[pro.Name].GetValue(itm));
+                            }
+                            else if (pro.PropertyType == typeof(Nullable<System.Decimal>))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =" + props[pro.Name].GetValue(itm));
+                            }
+                            
+                            else if (pro.PropertyType == typeof(System.Guid))
+                            {
+                            if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                            sb.Append("[" + pro.Name + "] =CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')");
+                            }
+                            else if (pro.PropertyType == typeof(Nullable<System.Guid>))
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] =CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')");
+                            }
+                            else
+                            {
+                                if (!sb.ToString().Contains("WHERE"))
+                                {
+                                    sb.Append(" WHERE ");
+                                }
+                                else
+                                {
+                                    sb.Append(" and ");
+                                }
+                                sb.Append("[" + pro.Name + "] ='" + props[pro.Name].GetValue(itm) + "'");
+                            }
+
+                        }
+                        else
+                        {
+
+                        }
+
+
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                
+            }
+
+            return sb.ToString();
         }
     }
 }

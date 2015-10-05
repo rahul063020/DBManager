@@ -26,5 +26,6 @@ namespace DBManager
         String UPDATE_FIELD { get; set; }
         List<ERASE_FIELD> ERASE_FIELD { get; set; }
         String CreateQuery<T>(List<GENERI_CCLAUSE<T>> clause);
+        String ExistSelectQuery<T>(List<T> Result);
     }
 }
