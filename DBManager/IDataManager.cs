@@ -14,6 +14,9 @@ namespace DBManager
         String SaveRecords<T>(List<T> data);
         String Update<T>(List<T> data);
         String Erase<T>(List<T> data);
+        String SaveDsRecords(DataSet data);
+        String UpdateDs(DataSet data);
+        String EraseDs(DataSet data);
         String ConnectionString { get; set; }
         String Queries { get; set; }
         bool IsTransectionOpen();

@@ -162,6 +162,10 @@ namespace DBManager
                             {
                                 updateIno += " [" + pro.Name + "] =" + props[pro.Name].GetValue(itm) + " ";
                             }
+                            else if (pro.PropertyType == typeof(System.Decimal) || pro.PropertyType == typeof(Nullable<System.Decimal>))
+                            {
+                                updateIno += " [" + pro.Name + "] =" + props[pro.Name].GetValue(itm) + " ";
+                            }
                             else if (pro.PropertyType == typeof(Nullable<System.Boolean>))
                             {
                                 updateIno += " [" + pro.Name + "] ='" + props[pro.Name].GetValue(itm).ToString() + "' ";
@@ -359,63 +363,86 @@ namespace DBManager
 
                         else if (valueName.Equals(""))
                         {
-                            valueName += "["+pro.Name+"]";
-                            value += " '" + props[pro.Name].GetValue(itm) + "'";
+                            if (pro.PropertyType == typeof(System.DateTime) || pro.PropertyType == typeof(Nullable<System.DateTime>))
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += " " + " CONVERT(DATETIME,'" + props[pro.Name].GetValue(itm).ToString() + "')";
+                            }
+                            else if (pro.PropertyType == typeof(System.Int32) || pro.PropertyType == typeof(Nullable<System.Int32>))
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += " " + props[pro.Name].GetValue(itm).ToString() + " ";
+                            }
+                            else if (pro.PropertyType == typeof(System.Boolean) || pro.PropertyType == typeof(Nullable<System.Boolean>))
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += " '" + props[pro.Name].GetValue(itm).ToString() + "' ";
+                            }
+                            else if (pro.PropertyType == typeof(System.Double) || pro.PropertyType == typeof(Nullable<System.Double>))
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += " '" + props[pro.Name].GetValue(itm).ToString() + "' ";
+                            }
+                            else if (pro.PropertyType == typeof(System.Byte[]))
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += "@Data";
+                            }
+                            else if (pro.PropertyType == typeof(Nullable<System.Guid>) || pro.PropertyType == typeof(System.Guid))
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += " " + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')";
+                            }
+                            else if (pro.PropertyType == typeof(System.Decimal) || pro.PropertyType == typeof(Nullable<System.Decimal>))
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += " '" + props[pro.Name].GetValue(itm).ToString() + "' ";
+                            }
+                            else
+                            {
+                                valueName += " [" + pro.Name + "] ";
+                                value += "  '" + props[pro.Name].GetValue(itm) + "'";
+                            }
                         }
-                        else if (pro.PropertyType == typeof(System.DateTime))
+                        else if (pro.PropertyType == typeof(System.DateTime) || pro.PropertyType == typeof(Nullable<System.DateTime>))
                         {
-                            valueName += ", [" + pro.Name+ "] ";
-                            value += ", " + " CONVERT(DATETIME,'" + props[pro.Name].GetValue(itm).ToString() + "')";
+                            valueName += " ,[" + pro.Name + "] ";
+                            value += " ," + " CONVERT(DATETIME,'" + props[pro.Name].GetValue(itm).ToString() + "')";
                         }
-                        else if (pro.PropertyType == typeof(System.Int32))
+                        else if (pro.PropertyType == typeof(System.Int32) || pro.PropertyType == typeof(Nullable<System.Int32>))
                         {
-                            valueName += ", [" + pro.Name+"] ";
-                            value += ", " + props[pro.Name].GetValue(itm).ToString() +" ";
+                            valueName += " ,[" + pro.Name + "] ";
+                            value += " ," + props[pro.Name].GetValue(itm).ToString() + " ";
                         }
-                        else if (pro.PropertyType == typeof(System.Boolean))
+                        else if (pro.PropertyType == typeof(System.Boolean) || pro.PropertyType == typeof(Nullable<System.Boolean>))
                         {
-                            valueName += ", [" + pro.Name+"] ";
-                            value += ", '" + props[pro.Name].GetValue(itm).ToString() + "' ";
+                            valueName += " ,[" + pro.Name + "] ";
+                            value += " ,'" + props[pro.Name].GetValue(itm).ToString() + "' ";
                         }
-                        else if (pro.PropertyType == typeof(System.Double))
+                        else if (pro.PropertyType == typeof(System.Double) || pro.PropertyType == typeof(Nullable<System.Double>))
                         {
-                            valueName += ", [" + pro.Name +"] ";
-                            value += ", '" + props[pro.Name].GetValue(itm).ToString() + "' ";
-                        }
-                        else if (pro.PropertyType == typeof(Nullable<System.Int32>))
-                        {
-                            valueName += ", [" + pro.Name +"] ";
-                            value += ", " + props[pro.Name].GetValue(itm).ToString() + " ";
-                        }
-                        else if (pro.PropertyType == typeof(Nullable<System.Boolean>))
-                        {
-                            valueName += ", [" + pro.Name+"] ";
-                            value += ", '" + props[pro.Name].GetValue(itm).ToString() + "' ";
-                        }
-                        else if (pro.PropertyType == typeof(Nullable<System.Boolean>))
-                        {
-                            valueName += ", [" + pro.Name+"] ";
-                            value += ", '" + props[pro.Name].GetValue(itm).ToString() + "' ";
+                            valueName += " ,[" + pro.Name + "] ";
+                            value += " ," + props[pro.Name].GetValue(itm).ToString() + " ";
                         }
                         else if (pro.PropertyType == typeof(System.Byte[]))
                         {
-                            valueName += ", [" + pro.Name+"] ";
+                            valueName += " ,[" + pro.Name + "] ";
                             value += ",@Data";
                         }
-                        else if (pro.PropertyType == typeof(Nullable<System.Guid>))
+                        else if (pro.PropertyType == typeof(Nullable<System.Guid>) || pro.PropertyType == typeof(System.Guid))
                         {
-                            valueName += ", [" + pro.Name + "] ";
-                            value += ", " + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')";
+                            valueName += " ,[" + pro.Name + "] ";
+                            value += " ," + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')";
                         }
-                        else if (pro.PropertyType == typeof(System.Guid))
+                        else if (pro.PropertyType == typeof(System.Decimal) || pro.PropertyType == typeof(Nullable<System.Decimal>))
                         {
-                            valueName += ", [" + pro.Name + "] ";
-                            value += ", '" + " CONVERT(uniqueidentifier,'" + props[pro.Name].GetValue(itm).ToString() + "')";
+                            valueName += " ,[" + pro.Name + "] ";
+                            value += " ," + props[pro.Name].GetValue(itm).ToString() + " ";
                         }
                         else
                         {
-                            valueName += ", [" + pro.Name+"] ";
-                            value += " , '" + props[pro.Name].GetValue(itm) + "'";
+                            valueName += " ,[" + pro.Name + "] ";
+                            value += "  ,'" + props[pro.Name].GetValue(itm) + "'";
                         }
                     }
 
@@ -975,5 +1002,248 @@ namespace DBManager
 
             return sb.ToString();
         }
+
+        public String produceDataSetInsertQuery(DataSet ds)
+        {
+            String sb = "";
+          
+
+            foreach(DataTable dt in ds.Tables)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    StringBuilder value = new StringBuilder();
+                    StringBuilder valueName = new StringBuilder();
+                    int i = 1;
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+                        if (!dc.Unique && dc.AllowDBNull && !dc.AutoIncrement)
+                        {
+                            if (dr[dc] != null && dr[dc].ToString() != "")
+                            {
+                                if (i == 1)
+                                {
+                                    valueName.Append(" [" + dc.ColumnName + "] ");
+                                    if (dc.DataType == typeof(System.Int32))
+                                    {
+                                        value.Append(" " + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Decimal))
+                                    {
+                                        value.Append(" " + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Double))
+                                    {
+                                        value.Append(" " + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Boolean))
+                                    {
+                                        value.Append(" '" + dr[dc].ToString() + "' ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Guid))
+                                    {
+                                        value.Append("CONVERT(uniqueidentifier,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else if (dc.DataType == typeof(System.DateTime))
+                                    {
+                                        value.Append("CONVERT(DATETIME,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else
+                                    {
+                                        value.Append("'" + dr[dc].ToString() + "'");
+                                    }
+
+                                }
+                                else
+                                {
+                                    valueName.Append(" ,[" + dc.ColumnName + "] ");
+                                    if (dc.DataType == typeof(System.Int32))
+                                    {
+                                        value.Append(" ," + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Decimal))
+                                    {
+                                        value.Append(" ," + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Double))
+                                    {
+                                        value.Append(" ," + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Boolean))
+                                    {
+                                        value.Append(" ,'" + dr[dc].ToString() + "' ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Guid))
+                                    {
+                                        value.Append(",CONVERT(uniqueidentifier,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else if (dc.DataType == typeof(System.DateTime))
+                                    {
+                                        value.Append(",CONVERT(DATETIME,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else
+                                    {
+                                        value.Append(",'" + dr[dc].ToString() + "'");
+                                    }
+
+                                }
+                                i++;
+                            }
+                        }
+                    }
+                    sb += " INSERT INTO [" + dt.TableName + "] (" + valueName.ToString() + ") VALUES (" + value.ToString() + ")" + Environment.NewLine; 
+                }
+                
+            }
+
+            return sb;
+            
+        }
+
+        public String produceDataSetUpdateQuery(DataSet ds)
+        {
+            String sb = "";
+
+
+            foreach (DataTable dt in ds.Tables)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    StringBuilder value = new StringBuilder();
+                    StringBuilder condition = new StringBuilder();
+                    int i = 1;
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+
+                        if (!dc.Unique && dc.AllowDBNull && !dc.AutoIncrement)
+                        {
+                            if (dr[dc] != null && dr[dc].ToString() != "")
+                            {
+                                if (i == 1)
+                                {
+                                    if (dc.DataType == typeof(System.Int32))
+                                    {
+                                        value.Append("["+dc.ColumnName+"]= " + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Decimal))
+                                    {
+                                        value.Append("[" + dc.ColumnName + "]= " + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Double))
+                                    {
+                                        value.Append("[" + dc.ColumnName + "]= " + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Boolean))
+                                    {
+                                        value.Append("[" + dc.ColumnName + "]= '" + dr[dc].ToString() + "' ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Guid))
+                                    {
+                                        value.Append("[" + dc.ColumnName + "]= CONVERT(uniqueidentifier,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else if (dc.DataType == typeof(System.DateTime))
+                                    {
+                                        value.Append("[" + dc.ColumnName + "]= CONVERT(DATETIME,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else
+                                    {
+                                        value.Append("[" + dc.ColumnName + "]='" + dr[dc].ToString() + "'");
+                                    }
+
+                                }
+                                else
+                                {
+                                    if (dc.DataType == typeof(System.Int32))
+                                    {
+                                        value.Append(" ,[" + dc.ColumnName + "]=" + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Decimal))
+                                    {
+                                        value.Append(" ,[" + dc.ColumnName + "]=" + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Double))
+                                    {
+                                        value.Append(" ,[" + dc.ColumnName + "]=" + dr[dc].ToString() + " ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Boolean))
+                                    {
+                                        value.Append(" ,[" + dc.ColumnName + "]='" + dr[dc].ToString() + "' ");
+                                    }
+                                    else if (dc.DataType == typeof(System.Guid))
+                                    {
+                                        value.Append(",[" + dc.ColumnName + "]= CONVERT(uniqueidentifier,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else if (dc.DataType == typeof(System.DateTime))
+                                    {
+                                        value.Append(",[" + dc.ColumnName + "]= CONVERT(DATETIME,'" + dr[dc].ToString() + "')");
+                                    }
+                                    else
+                                    {
+                                        value.Append(",[" + dc.ColumnName + "]= '" + dr[dc].ToString() + "'");
+                                    }
+
+                                }
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            condition.Append(" WHERE [" + dc.ColumnName + "]='" + dr[dc] + "'");
+                        }
+                    }
+                    sb += " UPDATE [" + dt.TableName + "] SET "+ value.ToString() +" "+condition.ToString()+" "+ Environment.NewLine;
+                }
+
+            }
+
+            return sb;
+
+        }
+
+        public string ExistSelectQuery(DataTable dt)
+        {
+            StringBuilder sb = new StringBuilder();
+           
+            sb.Append(" SELECT * FROM [" + TABLE_NAME + "] ");
+            
+            foreach (DataRow dr in dt.Rows)
+            {
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    if (!dc.Unique && dc.AllowDBNull && !dc.AutoIncrement)
+                    {
+                        sb.Append(" WHERE [" + dc.ColumnName + "]=" +dr[dc]);
+                    }
+                }   
+
+            }
+
+            
+
+            return sb.ToString();
+        }
+
+        public string produceDataSetEraseQuery(DataSet ds)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach(DataTable dt in ds.Tables)
+            {
+                foreach(DataRow dr in dt.Rows)
+                {
+                    foreach(DataColumn dc in dt.Columns)
+                    {
+                        if(dc.AutoIncrement && !dc.AllowDBNull && dc.Unique && dr[dc]!=null && dr[dc].ToString()!="")
+                        {
+                            sb.Append("DELETE FROM [" + dt.TableName + "] WHERE [" + dc.ColumnName + "]='" + dr[dc] + "'");
+                        }
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+
+     
     }
 }

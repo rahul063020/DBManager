@@ -36,6 +36,34 @@ namespace DBManager
          
         }
 
+        public bool IsColumnExist(String ColumnName,String TableName)
+        {
+
+            String columnOfTheTable = @"Select l.*,t.name TYPE_NAME from 
+                             ( 
+                             select * from sys.all_columns where object_id=
+                            (select object_id from sys.tables where name='" + TableName + @"') )l 
+                            Left outer join 
+                           (select * from sys.types) t
+                      on l.user_type_id=t.user_type_id ";
+            DBMContext dbContxt = new DBMContext();
+            List<TABLES_INFO> tblColumnlst = dbContxt.RetriveRecords<TABLES_INFO>(columnOfTheTable);
+            if(tblColumnlst.Count>0)
+            {
+                if(tblColumnlst.FindAll(itm=>itm.name==ColumnName).Count>0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 

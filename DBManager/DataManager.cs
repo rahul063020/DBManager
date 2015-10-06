@@ -59,6 +59,27 @@ namespace DBManager
             return "";
         }
 
+        public string SaveDsRecords(DataSet data)
+        {
+            IProduction produc = new InitializeDSProduction().Initalize();
+            Queries += " " + produc.produceDataSetInsertQuery(data);
+            return "";
+        }
+
+        public string UpdateDs(DataSet data)
+        {
+            IProduction produc = new InitializeDSProduction().Initalize();
+            Queries += " " + produc.produceDataSetUpdateQuery(data);
+            return "";
+        }
+
+        public string EraseDs(DataSet data)
+        {
+            IProduction produc = new InitializeDSProduction().Initalize();
+            Queries += " " + produc.produceDataSetEraseQuery(data);
+            return "";
+        }
+
         public void Commit()
         {
             transection.Commit();
@@ -121,7 +142,6 @@ namespace DBManager
        public DataSet GetDataSet()
        {
            CommandExecute();
-          // ExecuteReader();
            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
            IProduction produc = new Production();
            return produc.produceDataSetRecords(dataAdapter);
@@ -326,5 +346,8 @@ namespace DBManager
 
            command.ExecuteNonQuery();
        }
+
+
+      
     }
 }

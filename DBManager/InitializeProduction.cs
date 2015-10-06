@@ -128,4 +128,14 @@ namespace DBManager
             return prduc;
         }
     }
+
+
+    public class InitializeDSProduction
+    {
+        public IProduction Initalize()
+        {
+            return new Production();
+        }
+    }
+
 }

@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DBManager
 {
+    /// <summary>
+    /// GENERIC DATA TRIGGER
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DBContext<T> 
     {
 
         public String Message { get; set; }
-        public  void Where(String lineQuery)
+        public  void Where(String SqlQuery)
         {
-            Query = lineQuery;
+            Query = SqlQuery;
         }
 
 
         private bool SetVal = false;
         private String Query { get; set; }
+
 
         private List<GENERI_CCLAUSE<T>> _lstrecord;
         private List<GENERI_CCLAUSE<T>> lstrecord
@@ -121,7 +127,7 @@ namespace DBManager
             }
             else 
             {
-                Query += "SELECT * FROM [" + pro.TABLE_NAME + "] WHERE " + Query;
+               // Query += "SELECT * FROM [" + pro.TABLE_NAME + "] WHERE " + Query;
             }
         }
         private void AddRecords()
@@ -213,4 +219,6 @@ namespace DBManager
        
 
     }
+
+   
 }

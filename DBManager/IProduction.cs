@@ -27,5 +27,9 @@ namespace DBManager
         List<ERASE_FIELD> ERASE_FIELD { get; set; }
         String CreateQuery<T>(List<GENERI_CCLAUSE<T>> clause);
         String ExistSelectQuery<T>(List<T> Result);
+        string ExistSelectQuery(DataTable Result);
+        String produceDataSetInsertQuery(DataSet ds);
+        String produceDataSetUpdateQuery(DataSet ds);
+        string produceDataSetEraseQuery(DataSet ds);
     }
 }

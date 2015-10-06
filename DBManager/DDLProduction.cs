@@ -124,6 +124,11 @@ namespace DBManager
                                sb.Append(" ALTER TABLE [" + TABLE_NAME + "] ADD " + Environment.NewLine);
                                sb.Append(" [" + pro.Name + "] [decimal](18, 2) NULL " + Environment.NewLine);
                            }
+                           else if (pro.PropertyType == typeof(System.Decimal) || pro.PropertyType == typeof(Nullable<System.Decimal>))
+                           {
+                               sb.Append(" ALTER TABLE [" + TABLE_NAME + "] ADD " + Environment.NewLine);
+                               sb.Append(" [" + pro.Name + "] [decimal](18, 2) NULL " + Environment.NewLine);
+                           }
                            else if (pro.PropertyType == typeof(System.Boolean) || pro.PropertyType == typeof(Nullable<System.Boolean>))
                            {
                                sb.Append(" ALTER TABLE [" + TABLE_NAME + "] ADD " + Environment.NewLine);
@@ -157,6 +162,11 @@ namespace DBManager
                                else if (pro.PropertyType == typeof(System.Double) || pro.PropertyType == typeof(Nullable<System.Double>))
                                {
                                    sb.Append(" ALTER TABLE [" + TABLE_NAME + "] " + Environment.NewLine + " ALTER COLUMN " + Environment.NewLine);
+                                   sb.Append(" [" + pro.Name + "] [decimal](18, 2) NULL " + Environment.NewLine);
+                               }
+                               else if (pro.PropertyType == typeof(System.Decimal) || pro.PropertyType == typeof(Nullable<System.Decimal>))
+                               {
+                                   sb.Append(" ALTER TABLE [" + TABLE_NAME + "] ADD " + Environment.NewLine);
                                    sb.Append(" [" + pro.Name + "] [decimal](18, 2) NULL " + Environment.NewLine);
                                }
                                else if (pro.PropertyType == typeof(System.Boolean) || pro.PropertyType == typeof(Nullable<System.Boolean>))

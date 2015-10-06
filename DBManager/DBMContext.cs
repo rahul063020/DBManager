@@ -91,6 +91,8 @@ namespace DBManager
             return ds;
         }
 
+      
+
         /// <summary>
         /// Execute Stored Procedure Command
         /// </summary>
@@ -131,7 +133,27 @@ namespace DBManager
             return retUnLst;
         }
 
-
+        /// <summary>
+        /// Retrive DataSet
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet RetriveRecords(String sql)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                dbManager.Queries = sql;
+                ds = dbManager.GetDataSet();
+            }
+            catch (SqlException ex)
+            {
+                Message = "ERROR:" + Environment.NewLine + " CODE:" + ex.ErrorCode + Environment.NewLine +
+                                    " Error Messaage:" +
+                                    Environment.NewLine + ex.Message;
+            }
+            return ds;
+        }
         /// <summary>
         /// Retrive All Records of a Model
         /// </summary>
@@ -165,6 +187,17 @@ namespace DBManager
         }
 
         /// <summary>
+        /// DataSet
+        /// Save DataSet Records
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="lst"></param>
+        public void SaveRecords(DataSet ds)
+        {
+            dbManager.SaveDsRecords(ds);
+        }
+
+        /// <summary>
         /// Update List of Records
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -176,6 +209,18 @@ namespace DBManager
         }
 
         /// <summary>
+        /// Update DataSet Records
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="records"></param>
+        /// <param name="IDField"></param>
+        public void UpdateRecords(DataSet ds)
+        {
+            dbManager.UpdateDs(ds);
+        }
+
+        /// <summary>
+        /// DataSet
         /// Delete Records From DataBase
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -183,6 +228,17 @@ namespace DBManager
         public void DeleteRecords<T>(List<T> deltLst)
         {
             dbManager.Erase<T>(deltLst);
+        }
+
+        /// <summary>
+        /// DataSet
+        /// Delete DataSet Records
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="deltLst"></param>
+        public void DeleteRecords(DataSet ds)
+        {
+            dbManager.EraseDs(ds);
         }
 
         /// <summary>
