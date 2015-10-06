@@ -106,6 +106,7 @@ namespace DBManager
 
             foreach (PropertyInfo field in type.GetProperties())
             {
+               
                 foreach (Attribute attr in field.GetCustomAttributes(true))
                 {
                     dM = attr as DataMember;
@@ -114,6 +115,7 @@ namespace DBManager
                         lstSynPro.Add(new SYNC_PROP { IS_SYNC = dM.SYNC_PROERTY, PRO_NAME = field.Name });
                     }
                 }
+
             }
 
             prduc = new DDLProduction();

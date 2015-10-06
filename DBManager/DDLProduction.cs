@@ -166,7 +166,7 @@ namespace DBManager
                                }
                                else if (pro.PropertyType == typeof(System.Decimal) || pro.PropertyType == typeof(Nullable<System.Decimal>))
                                {
-                                   sb.Append(" ALTER TABLE [" + TABLE_NAME + "] ADD " + Environment.NewLine);
+                                   sb.Append(" ALTER TABLE [" + TABLE_NAME + "] " + Environment.NewLine + " ALTER COLUMN " + Environment.NewLine);
                                    sb.Append(" [" + pro.Name + "] [decimal](18, 2) NULL " + Environment.NewLine);
                                }
                                else if (pro.PropertyType == typeof(System.Boolean) || pro.PropertyType == typeof(Nullable<System.Boolean>))
