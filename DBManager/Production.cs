@@ -117,7 +117,7 @@ namespace DBManager
                 String where = "";
                 foreach (var pro in properties)
                 {
-                    if (props[pro.Name].GetValue(itm) != null && !props[pro.Name].GetValue(itm).ToString().Equals(""))
+                    if (props[pro.Name].GetValue(itm) != null && !props[pro.Name].GetValue(itm).ToString().Equals("") && ISPropertySynced(pro.Name))
                     {
 
                         if (pro.Name.Equals(ID_FIELD))
@@ -356,7 +356,7 @@ namespace DBManager
                 String value = "";
                 foreach (var pro in properties)
                 {
-                    if (props[pro.Name].GetValue(itm) != null && !props[pro.Name].GetValue(itm).Equals(""))
+                    if (props[pro.Name].GetValue(itm) != null && !props[pro.Name].GetValue(itm).Equals("") && ISPropertySynced(pro.Name))
                     {
                         if (pro.Name.Equals(ID_FIELD))
                             continue;
@@ -1243,7 +1243,29 @@ namespace DBManager
             return sb.ToString();
         }
 
+        public List<SYNC_PROP> LIST_SYNC_PRO { get; set; }
 
+        private bool ISPropertySynced(String proName)
+        {
+            if (LIST_SYNC_PRO.Count > 0)
+            {
+                if (LIST_SYNC_PRO.FindAll(itm => itm.PRO_NAME == proName).Count > 0)
+                {
+                    if (LIST_SYNC_PRO.FindAll(itm => itm.PRO_NAME == proName && itm.IS_SYNC == true).Count > 0)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
      
     }
 }

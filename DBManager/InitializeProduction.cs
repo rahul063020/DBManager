@@ -16,6 +16,7 @@ namespace DBManager
             String FilePathField = "";
             String UpdateField="";
             List<ERASE_FIELD> Erase_Field = new List<ERASE_FIELD>();
+            List<SYNC_PROP> lstSynPro = new List<SYNC_PROP>();
             Type type = typeof(T);
             DataMember dM;
             foreach (Attribute attr in type.GetCustomAttributes(true))
@@ -44,7 +45,19 @@ namespace DBManager
                     }
                 }
             }
+            foreach (PropertyInfo field in type.GetProperties())
+            {
 
+                foreach (Attribute attr in field.GetCustomAttributes(true))
+                {
+                    dM = attr as DataMember;
+                    if (null != dM)
+                    {
+                        lstSynPro.Add(new SYNC_PROP { IS_SYNC = dM.SYNC_PROERTY, PRO_NAME = field.Name });
+                    }
+                }
+
+            }
 
             prduc = new Production();
             prduc.ID_FIELD = id;
@@ -52,7 +65,8 @@ namespace DBManager
             if(prduc.ERASE_FIELD!=null)
             prduc.ERASE_FIELD = new List<ERASE_FIELD>();
             prduc.ERASE_FIELD = Erase_Field;
-            prduc.UPDATE_FIELD = UpdateField;            
+            prduc.UPDATE_FIELD = UpdateField;
+            prduc.LIST_SYNC_PRO = lstSynPro;
             return prduc;
         }
 

@@ -25,6 +25,7 @@ namespace DBManager
         String FILE_PATH_FIELD { get; set; }
         String UPDATE_FIELD { get; set; }
         List<ERASE_FIELD> ERASE_FIELD { get; set; }
+        List<SYNC_PROP> LIST_SYNC_PRO { get; set; }
         String CreateQuery<T>(List<GENERI_CCLAUSE<T>> clause);
         String ExistSelectQuery<T>(List<T> Result);
         string ExistSelectQuery(DataTable Result);
